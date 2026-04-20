@@ -20,7 +20,7 @@ locals {
 # Build Lambda packages
 resource "null_resource" "build_lambda_functions" {
   provisioner "local-exec" {
-    command = "python ${local.lambda_build_dir}/build_functions.py"
+    command = "python ${path.root}/lambda/build_functions.py"
   }
 }
 
