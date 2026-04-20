@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "rwa-voting-system-terraform-state-1776157684"
+    bucket         = "rwa-voting-system-terraform-state"
     key            = "terraform.tfstate"
     region         = "ap-south-1"
     encrypt        = true
