@@ -26,14 +26,19 @@ module "api_gateway" {
 
   send_otp_function_arn     = module.lambda.send_otp_function_arn
   send_otp_function_name    = module.lambda.send_otp_function_name
+
   verify_otp_function_arn   = module.lambda.verify_otp_function_arn
   verify_otp_function_name  = module.lambda.verify_otp_function_name
+
   cast_vote_function_arn    = module.lambda.cast_vote_function_arn
   cast_vote_function_name   = module.lambda.cast_vote_function_name
+
   get_results_function_arn  = module.lambda.get_results_function_arn
   get_results_function_name = module.lambda.get_results_function_name
+
   create_election_function_arn  = module.lambda.create_election_function_arn
   create_election_function_name = module.lambda.create_election_function_name
+
   add_candidates_function_arn   = module.lambda.add_candidates_function_arn
   add_candidates_function_name  = module.lambda.add_candidates_function_name
 }
