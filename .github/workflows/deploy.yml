@@ -91,6 +91,10 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
+        working-directory: ./infra
+        run: terraform init
+
+      - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: terraform init
 
