@@ -83,7 +83,18 @@ jobs:
           pip install PyJWT -t lambdas/auth/
           pip install PyJWT -t lambdas/verify/
           pip install PyJWT -t lambdas/vote/
-
+          
+      - name: Build Lambda Zips
+        run: |
+          mkdir -p lambda/.build
+          cd lambda
+          for dir in */ ; do
+            name=$(basename $dir)
+            cd $dir
+            zip -r ../../.build/$name.zip .
+            cd ..
+          done
+          
       # -------------------------------
       # Terraform Setup
       # -------------------------------
