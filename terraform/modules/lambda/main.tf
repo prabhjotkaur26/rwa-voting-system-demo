@@ -60,7 +60,7 @@ locals {
     "create_election",
     "add_candidates"
   ]
-  lambda_build_dir = "${path.module}/../../../lambda"
+  lambda_build_dir = "${path.root}/lambda"
 }
 
 # Build Lambda function packages with shared lib files
@@ -103,15 +103,17 @@ locals {
 
 # Send OTP Lambda
 resource "aws_lambda_function" "send_otp" {
-  filename            = local.send_otp_zip
-  function_name       = "${var.project_name}-send-otp-${var.environment}"
-  role                = var.execution_role_arn
-  handler             = "index.lambda_handler"
-  runtime             = "python3.11"
-  timeout             = var.lambda_timeout
-  memory_size         = var.lambda_memory
-  source_code_hash    = filebase64sha256(local.send_otp_zip)
-  depends_on          = [null_resource.build_lambda_functions]
+  filename         = local.send_otp_zip
+  function_name    = "${var.project_name}-send-otp-${var.environment}"
+  role             = var.execution_role_arn
+  handler          = "index.lambda_handler"
+  runtime          = "python3.11"
+  timeout          = var.lambda_timeout
+  memory_size      = var.lambda_memory
+
+  source_code_hash = fileexists(local.send_otp_zip) ? filebase64sha256(local.send_otp_zip) : null
+
+  depends_on = [null_resource.build_lambda_functions]
 
   environment {
     variables = {
