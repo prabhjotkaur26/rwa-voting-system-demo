@@ -1,3 +1,46 @@
+locals {
+  project = "${var.project_name}-${var.environment}"
+}
+
+# DynamoDB
+module "dynamodb" {
+  source = "./modules/dynamodb"
+
+  project_name       = var.project_name
+  environment        = var.environment
+  otp_expiry_minutes = var.otp_expiry_minutes
+  read_capacity      = var.dynamodb_read_capacity
+  write_capacity     = var.dynamodb_write_capacity
+}
+
+# SNS
+module "sns" {
+  source = "./modules/sns"
+
+  project_name = var.project_name
+  environment  = var.environment
+  topic_name   = var.sns_topic_name
+}
+
+# IAM
+module "iam" {
+  source = "./modules/iam"
+
+  project_name = var.project_name
+  environment  = var.environment
+
+  sns_topic_arn = module.sns.sns_topic_arn
+
+  dynamodb_arns = [
+    module.dynamodb.votes_table_arn,
+    module.dynamodb.otp_table_arn,
+    module.dynamodb.candidates_table_arn,
+    module.dynamodb.elections_table_arn,
+    module.dynamodb.voters_table_arn,
+  ]
+}
+
+# Lambda
 module "lambda" {
   source = "./modules/lambda"
 
@@ -16,29 +59,4 @@ module "lambda" {
   sns_topic_arn      = module.sns.sns_topic_arn
   otp_expiry_minutes = var.otp_expiry_minutes
   aws_region         = var.aws_region
-}
-
-module "api_gateway" {
-  source = "./modules/api_gateway"
-
-  project_name = var.project_name
-  environment  = var.environment
-
-  send_otp_function_arn     = module.lambda.send_otp_function_arn
-  send_otp_function_name    = module.lambda.send_otp_function_name
-
-  verify_otp_function_arn   = module.lambda.verify_otp_function_arn
-  verify_otp_function_name  = module.lambda.verify_otp_function_name
-
-  cast_vote_function_arn    = module.lambda.cast_vote_function_arn
-  cast_vote_function_name   = module.lambda.cast_vote_function_name
-
-  get_results_function_arn  = module.lambda.get_results_function_arn
-  get_results_function_name = module.lambda.get_results_function_name
-
-  create_election_function_arn  = module.lambda.create_election_function_arn
-  create_election_function_name = module.lambda.create_election_function_name
-
-  add_candidates_function_arn   = module.lambda.add_candidates_function_arn
-  add_candidates_function_name  = module.lambda.add_candidates_function_name
 }
