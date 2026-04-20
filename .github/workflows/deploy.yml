@@ -93,10 +93,10 @@ jobs:
       - name: Build Lambda Zips
         run: |
           mkdir -p lambda/.build
-
+      
           for dir in lambda/*/ ; do
-            name=$(basename $dir)
-            zip -r lambda/.build/$name.zip $dir
+          name=$(basename $dir)
+          zip -r lambda/.build/$name.zip $dir
           done
 
       # -------------------------------
