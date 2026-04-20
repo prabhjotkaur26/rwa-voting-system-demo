@@ -1,6 +1,6 @@
 # Create a temporary directory for Lambda code
 locals {
-  lambda_build_dir = "${path.root}/lambda"
+  lambda_build_dir = "${path.root}/../lambda"
 
   send_otp_zip      = "${local.lambda_build_dir}/.build/send_otp.zip"
   verify_otp_zip    = "${local.lambda_build_dir}/.build/verify_otp.zip"
@@ -8,13 +8,6 @@ locals {
   get_results_zip   = "${local.lambda_build_dir}/.build/get_results.zip"
   create_election_zip = "${local.lambda_build_dir}/.build/create_election.zip"
   add_candidates_zip  = "${local.lambda_build_dir}/.build/add_candidates.zip"
-  get_posts_zip     = "${local.lambda_build_dir}/.build/get_posts.zip"
-  export_results_zip = "${local.lambda_build_dir}/.build/export_results.zip"
-  bulk_upload_voters_zip = "${local.lambda_build_dir}/.build/bulk_upload_voters.zip"
-  get_elections_zip = "${local.lambda_build_dir}/.build/get_elections.zip"
-  get_candidates_zip = "${local.lambda_build_dir}/.build/get_candidates.zip"
-  admin_login_zip = "${local.lambda_build_dir}/.build/admin_login.zip"
-  admin_stats_zip = "${local.lambda_build_dir}/.build/admin_stats.zip"
 }
 
 # Build Lambda packages
