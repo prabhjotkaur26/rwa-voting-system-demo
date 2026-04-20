@@ -9,7 +9,7 @@ on:
 env:
   AWS_REGION: ap-south-1
   TF_WORKING_DIR: terraform
-  S3_BUCKET: rwa-voting-system-terraform-state 
+  S3_BUCKET: rwa-voting-system-terraform-state-1776157684 
   DYNAMODB_TABLE: terraform-locks
 
 jobs:
