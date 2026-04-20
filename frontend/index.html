@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RWA Voting System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .container { display: flex; flex-direction: column; min-height: 100vh; max-width: 900px; margin: 0 auto; background: white; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>RWA Voting System</h1>
+                <p>Secure Electronic Voting for Resident Welfare Associations</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Authentication Section -->
+            <div id="authSection" class="section active">
+                <h2>Enter Mobile Number</h2>
+                <p class="section-subtitle">Your mobile number will be used to verify your identity in our system via OTP</p>
+
+                <form id="authForm" class="form">
+                    <div class="form-group">
+                        <label for="mobileNumber">Mobile Number</label>
+                        <input
+                            type="tel"
+                            id="mobileNumber"
+                            class="input"
+                            placeholder="Enter 10-digit mobile number"
+                            required
+                            pattern="\d{10}"
+                        >
+                        <small>Format: 10 digits (e.g., 9876543210)</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="sendOtpBtn">
+                        Submit OTP
+                    </button>
+                </form>
+
+                <div id="authMessage" class="message" style="display: none;"></div>
+            </div>
+
+            <!-- OTP Verification Section -->
+            <div id="otpSection" class="section">
+                <h2>Verify OTP</h2>
+                <p class="section-subtitle">Enter the 6-digit OTP sent to your mobile</p>
+
+                <div class="otp-info">
+                    <p>Mobile: <strong id="displayMobile">****</strong></p>
+                    <p><small id="otpTimer">OTP expires in: 5:00</small></p>
+                </div>
+
+                <form id="otpForm" class="form">
+                    <div class="form-group">
+                        <label for="otp">One-Time Password (OTP)</label>
+                        <input
+                            type="text"
+                            id="otp"
+                            class="input input-otp"
+                            placeholder="000000"
+                            maxlength="6"
+                            required
+                            pattern="\d{6}"
+                        >
+                        <small>6-digit code from SMS</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="verifyOtpBtn">
+                        Verify OTP
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" id="resendOtpBtn">
+                        Resend OTP
+                    </button>
+                </form>
+
+                <div id="otpMessage" class="message" style="display: none;"></div>
+            </div>
+
+            <!-- Election Selection Section -->
+            <div id="electionSection" class="section">
+                <h2>Select Election</h2>
+                <div id="electionList" class="election-list">
+                    <p class="loading">Loading elections...</p>
+                </div>
+                <div id="electionMessage" class="message" style="display: none;"></div>
+            </div>
+
+            <!-- Voting Section -->
+            <div id="votingSection" class="section">
+                <h2 id="votingTitle">Cast Your Votes</h2>
+                <p class="section-subtitle">Vote for your preferred candidates in each post</p>
+
+                <div id="votingContainer" class="voting-container"></div>
+
+                <div class="voting-actions">
+                    <button type="button" class="btn btn-success" id="submitVotesBtn">
+                        Submit All Votes
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="logoutBtn">
+                        Logout
+                    </button>
+                </div>
+
+                <div id="votingMessage" class="message" style="display: none;"></div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="section">
+                <h2>Election Results</h2>
+                <div class="results-controls">
+                    <button type="button" class="btn btn-small" id="refreshResultsBtn">
+                        Refresh Results
+                    </button>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="autoRefreshCheckbox" checked>
+                        Auto-refresh (5 seconds)
+                    </label>
+                </div>
+
+                <div id="resultsContainer" class="results-container"></div>
+
+                <button type="button" class="btn btn-secondary" id="logoutFromResultsBtn">
+                    Logout
+                </button>
+            </div>
+
+            <!-- Success Section -->
+            <div id="successSection" class="section">
+                <div class="success-message">
+                    <div class="success-icon">✓</div>
+                    <h2>Votes Submitted Successfully!</h2>
+                    <p>Your votes have been securely recorded.</p>
+                    <p><small>Thank you for participating in the election.</small></p>
+
+                    <button type="button" class="btn btn-secondary" id="logoutFromSuccessBtn">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Pasapi Tech Solution Private Limted. All rights reserved.</p>
+            <p><small>Solution designed for secure and efficient voting. Election conducted securely using AWS serverless technology</small></p>
+        </footer>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="statusBar" class="status-bar" style="display: none;">
+        <span id="statusText"></span>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="spinner" style="display: none;">
+        <div class="spinner-inner"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

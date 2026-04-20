@@ -1,0 +1,194 @@
+{
+  "comment": "Sample JSON for adding candidates with images to election",
+  "request_format": {
+    "electionId": "election-2024-01",
+    "postId": "1",
+    "candidates": [
+      {
+        "candidateId": "cand-001",
+        "candidateName": "John Doe",
+        "imageUrl": "https://example.com/photos/john-doe.jpg",
+        "party": "Community Development Party",
+        "bio": "15 years experience in community development"
+      }
+    ]
+  },
+  "example_full_election": {
+    "postId": "1",
+    "electionId": "election-2024-01",
+    "posts": [
+      {
+        "postName": "President",
+        "postId": "post-1",
+        "candidates": [
+          {
+            "candidateId": "pres-001",
+            "candidateName": "Rajesh Kumar",
+            "mobileNumber": "9876543210",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/rajesh-kumar.jpg",
+            "party": "Green Party",
+            "bio": "Experienced in community development and social welfare"
+          },
+          {
+            "candidateId": "pres-002",
+            "candidateName": "Priya Sharma",
+            "mobileNumber": "9876543211",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/priya-sharma.jpg",
+            "party": "Citizens Forum",
+            "bio": "Dedicated to improving resident services and amenities"
+          },
+          {
+            "candidateId": "pres-003",
+            "candidateName": "Amit Singh",
+            "mobileNumber": "9876543212",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/amit-singh.jpg",
+            "party": "Unity Movement",
+            "bio": "Focus on safety, sustainable development, and transparency"
+          }
+        ]
+      },
+      {
+        "postName": "Vice President",
+        "postId": "post-2",
+        "candidates": [
+          {
+            "candidateId": "vp-001",
+            "candidateName": "Neha Patel",
+            "mobileNumber": "9876543213",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/neha-patel.jpg",
+            "party": "Community Service Wing",
+            "bio": "Passionate about resident welfare and community engagement"
+          },
+          {
+            "candidateId": "vp-002",
+            "candidateName": "Vikram Gupta",
+            "mobileNumber": "9876543214",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/vikram-gupta.jpg",
+            "party": "Progressive Alliance",
+            "bio": "Expert in financial management and resource optimization"
+          }
+        ]
+      },
+      {
+        "postName": "Treasurer",
+        "postId": "post-3",
+        "candidates": [
+          {
+            "candidateId": "tres-001",
+            "candidateName": "Anjali Verma",
+            "mobileNumber": "9876543215",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/anjali-verma.jpg",
+            "party": "Finance Forward",
+            "bio": "CPA certified, 20 years accounting experience"
+          },
+          {
+            "candidateId": "tres-002",
+            "candidateName": "Rahul Chopra",
+            "mobileNumber": "9876543216",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/rahul-chopra.jpg",
+            "party": "Budget Alliance",
+            "bio": "Transparent financial management and auditing expertise"
+          }
+        ]
+      },
+      {
+        "postName": "Secretary",
+        "postId": "post-4",
+        "candidates": [
+          {
+            "candidateId": "sec-001",
+            "candidateName": "Kavya Iyer",
+            "mobileNumber": "9876543217",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/kavya-iyer.jpg",
+            "party": "Documentation First",
+            "bio": "Expert in administrative procedures and documentation"
+          },
+          {
+            "candidateId": "sec-002",
+            "candidateName": "Arjun Desai",
+            "mobileNumber": "9876543218",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/arjun-desai.jpg",
+            "party": "Efficiency Guild",
+            "bio": "Focus on administrative efficiency and resident communication"
+          }
+        ]
+      },
+      {
+        "postName": "Joint Secretary",
+        "postId": "post-5",
+        "candidates": [
+          {
+            "candidateId": "jsec-001",
+            "candidateName": "Divya Nair",
+            "mobileNumber": "9876543219",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/divya-nair.jpg",
+            "party": "Support Services",
+            "bio": "Dedicated to support resident grievances and communication"
+          },
+          {
+            "candidateId": "jsec-002",
+            "candidateName": "Suresh Reddy",
+            "mobileNumber": "9876543220",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/suresh-reddy.jpg",
+            "party": "Community Voice",
+            "bio": "Strong focus on resident satisfaction and grievance redressal"
+          }
+        ]
+      },
+      {
+        "postName": "Public Relations",
+        "postId": "post-6",
+        "candidates": [
+          {
+            "candidateId": "pr-001",
+            "candidateName": "Meera Sinha",
+            "mobileNumber": "9876543221",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/meera-sinha.jpg",
+            "party": "Communication Alliance",
+            "bio": "Marketing professional with excellent public speaking skills"
+          },
+          {
+            "candidateId": "pr-002",
+            "candidateName": "Sanjay Rao",
+            "mobileNumber": "9876543222",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/sanjay-rao.jpg",
+            "party": "Media Relations",
+            "bio": "Experience with community events and public relations"
+          }
+        ]
+      },
+      {
+        "postName": "Youth Member",
+        "postId": "post-7",
+        "candidates": [
+          {
+            "candidateId": "youth-001",
+            "candidateName": "Pooja Malhotra",
+            "mobileNumber": "9876543223",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/pooja-malhotra.jpg",
+            "party": "Youth Forward",
+            "bio": "Young professional passionate about innovation and sustainability"
+          },
+          {
+            "candidateId": "youth-002",
+            "candidateName": "Rohan Bansal",
+            "mobileNumber": "9876543224",
+            "imageUrl": "https://my-bucket.s3.amazonaws.com/candidates/rohan-bansal.jpg",
+            "party": "Next Generation",
+            "bio": "Tech-savvy advocate for modern solutions and youth engagement"
+          }
+        ]
+      }
+    ]
+  },
+  "notes": {
+    "imageUrl": "Public URL to candidate's photo (S3, CDN, or any public URL)",
+    "party": "Candidate's political party or group affiliation (optional)",
+    "bio": "Short biography or qualifications (optional)",
+    "mobileNumber": "Candidate's mobile number to restrict result access (optional)",
+    "recommended_image_size": "300x400 pixels (3:4 aspect ratio)",
+    "recommended_image_format": ["JPG", "PNG", "WebP"],
+    "max_image_size": "10MB per image"
+  },
+  "curl_example": "curl -X POST https://your-api.com/admin/candidates -H 'Content-Type: application/json' -d @candidates_sample.json"
+}

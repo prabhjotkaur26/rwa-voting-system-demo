@@ -1,0 +1,107 @@
+# RWA Voting System - Configuration Template
+
+This file contains the Terraform variables example.
+
+## How to Use
+
+1. Copy this file to `terraform/terraform.tfvars`
+2. Replace placeholder values with your configuration
+3. Run `terraform init && terraform plan && terraform apply`
+
+## Variables
+
+```hcl
+# AWS Configuration
+aws_region   = "ap-south-1"     # Choose region close to users
+environment  = "prod"           # dev, staging, or prod
+
+# Project Configuration
+project_name              = "rwa-voting"
+sns_topic_name            = "voting-otp-topic"
+
+# Lambda Configuration
+lambda_timeout            = 30      # Maximum execution time (seconds)
+lambda_memory             = 256     # Memory allocation (128-10240 MB)
+
+# OTP Configuration
+otp_expiry_minutes        = 5       # OTP validity period
+
+# DynamoDB Configuration
+# "PAY_PER_REQUEST" = On-demand (recommended for free tier)
+# "1" to "40000" = Provisioned capacity
+dynamodb_read_capacity    = "PAY_PER_REQUEST"
+dynamodb_write_capacity   = "PAY_PER_REQUEST"
+
+# API Gateway Configuration
+api_throttling_burst_limit = 5000    # Burst requests per second
+api_throttling_rate_limit  = 2000    # Sustained requests per second
+
+# CORS Configuration
+enable_cors               = true
+allowed_origins           = ["*"]    # Restrict in production
+
+# Tags
+tags = {
+  Project    = "RWA Voting System"
+  Team       = "Tech Team"
+  CostCenter = "Operations"
+}
+```
+
+## AWS Region Selection
+
+| Region | Name | Best For |
+|--------|------|----------|
+| us-east-1 | US East (N. Virginia) | North America, Global |
+| ap-south-1 | Asia Pacific (Mumbai) | **India** (lowest latency) |
+| eu-west-1 | Europe (Ireland) | Europe |
+| ca-central-1 | Canada | North America |
+
+**Recommendation for India-based RWAs: Use ap-south-1**
+
+## Example Configurations
+
+### Minimal (Development)
+```hcl
+aws_region    = "ap-south-1"
+environment   = "dev"
+project_name  = "rwa-voting-dev"
+```
+
+### Production (India)
+```hcl
+aws_region    = "ap-south-1"
+environment   = "prod"
+project_name  = "rwa-voting"
+lambda_memory = 512         # Higher for better performance
+allowed_origins = ["https://voting.yourrwa.in"]
+```
+
+### High-Traffic Election
+```hcl
+aws_region                = "ap-south-1"
+lambda_memory            = 512
+api_throttling_rate_limit = 5000
+dynamodb_read_capacity   = 100       # Provisioned for sustained load
+```
+
+## Cost Optimization Tips
+
+1. **Use US region** ($0-1 cheaper per month)
+2. **Reduce lambda_memory** to 128 MB (saves 50%)
+3. **Increase otp_expiry_minutes** to 10 (reduces retries)
+4. **Use on-demand DynamoDB** (better for variable load)
+
+## Sensitive Values
+
+Never commit these to git:
+- AWS credentials
+- API keys
+- Private keys
+- admin passwords
+
+Use environment variables or AWS Secrets Manager instead.
+
+---
+
+See [DEPLOYMENT_GUIDE.md](../docs/DEPLOYMENT_GUIDE.md) for complete setup instructions.
