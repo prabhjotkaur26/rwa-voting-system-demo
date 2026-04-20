@@ -1,24 +1,24 @@
-# Create a temporary directory for Lambda code
 locals {
   lambda_build_dir = "${path.root}/../lambda"
 
-  send_otp_zip      = "${local.lambda_build_dir}/.build/send_otp.zip"
-  verify_otp_zip    = "${local.lambda_build_dir}/.build/verify_otp.zip"
-  cast_vote_zip     = "${local.lambda_build_dir}/.build/cast_vote.zip"
-  get_results_zip   = "${local.lambda_build_dir}/.build/get_results.zip"
+  send_otp_zip        = "${local.lambda_build_dir}/.build/send_otp.zip"
+  verify_otp_zip      = "${local.lambda_build_dir}/.build/verify_otp.zip"
+  cast_vote_zip       = "${local.lambda_build_dir}/.build/cast_vote.zip"
+  get_results_zip     = "${local.lambda_build_dir}/.build/get_results.zip"
   create_election_zip = "${local.lambda_build_dir}/.build/create_election.zip"
   add_candidates_zip  = "${local.lambda_build_dir}/.build/add_candidates.zip"
 }
 
-# Build Lambda packages
+# 🔥 Force rebuild every time
 resource "null_resource" "build_lambda_functions" {
+  triggers = {
+    always_run = timestamp()
+  }
+
   provisioner "local-exec" {
-   command = "python ${path.root}/../lambda/build_functions.py"
+    command = "python ${path.root}/../lambda/build_functions.py"
   }
 }
-
-# 🔥 COMMON FIX PATTERN
-# source_code_hash = fileexists(...) ? filebase64sha256(...) : null
 
 # -------------------------------
 # Send OTP
@@ -32,7 +32,7 @@ resource "aws_lambda_function" "send_otp" {
   timeout          = var.lambda_timeout
   memory_size      = var.lambda_memory
 
-  source_code_hash = fileexists(local.send_otp_zip) ? filebase64sha256(local.send_otp_zip) : null
+  source_code_hash = fileexists(local.send_otp_zip) ? filebase64sha256(local.send_otp_zip) : ""
 
   depends_on = [null_resource.build_lambda_functions]
 
@@ -60,7 +60,7 @@ resource "aws_lambda_function" "verify_otp" {
   timeout          = var.lambda_timeout
   memory_size      = var.lambda_memory
 
-  source_code_hash = fileexists(local.verify_otp_zip) ? filebase64sha256(local.verify_otp_zip) : null
+  source_code_hash = fileexists(local.verify_otp_zip) ? filebase64sha256(local.verify_otp_zip) : ""
 
   depends_on = [null_resource.build_lambda_functions]
 
@@ -83,7 +83,7 @@ resource "aws_lambda_function" "cast_vote" {
   timeout          = var.lambda_timeout
   memory_size      = var.lambda_memory
 
-  source_code_hash = fileexists(local.cast_vote_zip) ? filebase64sha256(local.cast_vote_zip) : null
+  source_code_hash = fileexists(local.cast_vote_zip) ? filebase64sha256(local.cast_vote_zip) : ""
 
   depends_on = [null_resource.build_lambda_functions]
 
@@ -108,7 +108,7 @@ resource "aws_lambda_function" "get_results" {
   timeout          = var.lambda_timeout
   memory_size      = var.lambda_memory
 
-  source_code_hash = fileexists(local.get_results_zip) ? filebase64sha256(local.get_results_zip) : null
+  source_code_hash = fileexists(local.get_results_zip) ? filebase64sha256(local.get_results_zip) : ""
 
   depends_on = [null_resource.build_lambda_functions]
 
@@ -133,7 +133,7 @@ resource "aws_lambda_function" "create_election" {
   timeout          = var.lambda_timeout
   memory_size      = var.lambda_memory
 
-  source_code_hash = fileexists(local.create_election_zip) ? filebase64sha256(local.create_election_zip) : null
+  source_code_hash = fileexists(local.create_election_zip) ? filebase64sha256(local.create_election_zip) : ""
 
   depends_on = [null_resource.build_lambda_functions]
 
@@ -156,7 +156,7 @@ resource "aws_lambda_function" "add_candidates" {
   timeout          = var.lambda_timeout
   memory_size      = var.lambda_memory
 
-  source_code_hash = fileexists(local.add_candidates_zip) ? filebase64sha256(local.add_candidates_zip) : null
+  source_code_hash = fileexists(local.add_candidates_zip) ? filebase64sha256(local.add_candidates_zip) : ""
 
   depends_on = [null_resource.build_lambda_functions]
 
