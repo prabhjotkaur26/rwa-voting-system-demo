@@ -34,17 +34,20 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       # -------------------------------
-      # BACKEND BOOTSTRAP (SAFE)
+      # BACKEND BOOTSTRAP
       # -------------------------------
       - name: Create S3 Bucket (if not exists)
         run: |
           BUCKET=$S3_BUCKET
 
-          aws s3api head-bucket --bucket $BUCKET 2>/dev/null || \
-          aws s3api create-bucket \
-            --bucket $BUCKET \
-            --region $AWS_REGION \
-            --create-bucket-configuration LocationConstraint=$AWS_REGION
+          if aws s3api head-bucket --bucket $BUCKET 2>/dev/null; then
+            echo "Bucket exists"
+          else
+            aws s3api create-bucket \
+              --bucket $BUCKET \
+              --region $AWS_REGION \
+              --create-bucket-configuration LocationConstraint=$AWS_REGION
+          fi
 
           aws s3api put-bucket-versioning \
             --bucket $BUCKET \
@@ -76,25 +79,26 @@ jobs:
           aws dynamodb wait table-exists --table-name $TABLE
 
       # -------------------------------
-      # Install Dependencies (SAFE)
+      # Install Dependencies
       # -------------------------------
       - name: Install Lambda Dependencies
         run: |
-          pip install PyJWT -t lambdas/auth/
-          pip install PyJWT -t lambdas/verify/
-          pip install PyJWT -t lambdas/vote/
-          
+          pip install PyJWT -t lambda/auth/
+          pip install PyJWT -t lambda/verify/
+          pip install PyJWT -t lambda/vote/
+
+      # -------------------------------
+      # Build Lambda Zips
+      # -------------------------------
       - name: Build Lambda Zips
         run: |
           mkdir -p lambda/.build
-          cd lambda
-          for dir in */ ; do
+
+          for dir in lambda/*/ ; do
             name=$(basename $dir)
-            cd $dir
-            zip -r ../../.build/$name.zip .
-            cd ..
+            zip -r lambda/.build/$name.zip $dir
           done
-          
+
       # -------------------------------
       # Terraform Setup
       # -------------------------------
@@ -103,7 +107,7 @@ jobs:
 
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform init
+        run: terraform init -reconfigure
 
       - name: Terraform Validate
         working-directory: ${{ env.TF_WORKING_DIR }}
